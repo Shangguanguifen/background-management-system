@@ -1,0 +1,38 @@
+.logo {
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 12px;
+}
+.site-layout-background {
+  background: #fff;
+  position: relative;
+  .login-out:hover .login-out-content{
+    display: block;
+  }
+  .login-out {
+    float: right;
+    .login-title {
+      float: right; 
+      cursor: pointer;
+    }
+    .login-out-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 14px;
+      width: 200px;
+      height: 46px;
+      line-height: 46px;
+      padding-left: 12px;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.15);
+      box-shadow: 0 6px 12px rgba(0,0,0,.175);;
+    }
+    
+  }
+}

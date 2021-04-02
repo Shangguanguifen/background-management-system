@@ -1,0 +1,37 @@
+#page-wrapper{
+  .row {
+    display: flex;
+    flex-direction: row ;
+    flex-wrap: wrap;  //换行，第一行在上方
+    justify-content: center;
+    color: #fff;
+    .row-item {
+      flex-grow: 1;
+      height: 140px;
+      margin-left: 34px;
+      box-sizing: border-box;
+      text-align: center;
+      opacity: 0.9;
+      transition: all 0.3s;
+      &:first-child{
+        margin-left: 0px;
+      }
+      &:hover {
+        color: #555;
+        opacity: 1;
+        transform: scale(1.08);
+      }
+      .count {
+        height: 60px;
+        line-height: 60px;
+        font-size: 40px;
+      }
+      .desc {
+        font-size: 18px;
+        .anticon {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom'
+
+import Layout from 'component/layout'
+import Home from 'page/home'
+import Login from 'page/login'
+import ErrorPage from 'page/error'
+import UserList from 'page/user'
 
 function App() {
+  const LayoutRouter = (
+    <Layout>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/product" component={Home} />
+        <Route path="/user/userList" component={UserList}></Route>
+        <Redirect from="/user" to='/user/userList'></Redirect>
+        <Route component={ErrorPage} />
+      </Switch>
+    </Layout>
+  )
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/" render={(props) => {
+            return LayoutRouter
+          }}></Route>
+        </Switch>
+        
+      </BrowserRouter>
     </div>
   );
 }
