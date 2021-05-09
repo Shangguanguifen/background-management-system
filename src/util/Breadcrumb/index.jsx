@@ -2,7 +2,7 @@
  * @Author: Guifen Shangguan 
  * @Date: 2021-04-12 16:11:56 
  * @Last Modified by: Guifen Shangguan
- * @Last Modified time: 2021-04-12 21:57:58
+ * @Last Modified time: 2021-05-09 15:37:33
  */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,6 @@ function BreadcrumbItem({urlDetail, routes}) {
     let result = [];
     const recursion = (routes, pathname) => {
       const branch = matchRoutes(routes, pathname);
-      console.log(branch, 'branch', pathname)
 
       if(!branch[0].route.title) {
         return;
@@ -40,7 +39,6 @@ function BreadcrumbItem({urlDetail, routes}) {
     setBreadcrumbItem(matchTitleArr);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlDetail])
-  console.log('breadcrumbItem', breadcrumbItem)
   return (
     <Breadcrumb style={{ margin: '16px 0' }}>
       <Breadcrumb.Item>

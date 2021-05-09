@@ -70,7 +70,6 @@ function OrderList() {
     }
     // 请求接口
     _order.getOrderList(listParam).then(res => {
-      console.log(res, 'list')
       let resList = res.list
       resList.forEach(item => {
         item.key = item.orderNo

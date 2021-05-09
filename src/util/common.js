@@ -57,9 +57,7 @@ class CommonUtil {
       window.localStorage.setItem(name, data);
     } else {
       this.errorTips('该类型不能用于本地存储');
-    }
-    console.log('kk')
-    
+    }    
   }
 
   // 取出本地存储的内容
