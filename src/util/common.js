@@ -78,6 +78,7 @@ class CommonUtil {
     //[Object Array].slice(8, -1) = Array
     return Object.prototype.toString.call(target).slice(8, -1)
   }
+  
 }
 
 

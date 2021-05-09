@@ -1,34 +1,59 @@
-import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom'
+/*
+ * @Author: Guifen Shangguan 
+ * @Date: 2021-04-12 16:11:51 
+ * @Last Modified by: Guifen Shangguan
+ * @Last Modified time: 2021-05-07 13:16:26
+ */
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import routers from 'router/index';
+import { useSelector } from "react-redux";
+
 
 import Layout from 'component/layout'
-import Home from 'page/home'
-import Login from 'page/login'
-import ErrorPage from 'page/error'
-import UserList from 'page/user'
+import Login from 'page/login';
+import RenderRouter from 'router/renderRouter'
+
+
+
+function routesMap(routes, roles) {
+  let permission = false;
+  if(roles.indexOf('admin') > -1) {
+    permission = true;
+  }
+
+  return routes.map(route => {
+    if(route.children) {
+      const routeChildren = route.children;
+      return routesMap(routeChildren, roles);
+    }
+    if(route.component) {
+      return <RenderRouter key={route.path} {...route} permission={permission} />
+    }
+
+    return <RenderRouter key={route.path} {...route} permission={permission} />
+  })
+}
 
 function App() {
+  const roles = useSelector(state => state.roles);
+
   const LayoutRouter = (
     <Layout>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/product" component={Home} />
-        <Route path="/user/userList" component={UserList}></Route>
-        <Redirect from="/user" to='/user/userList'></Redirect>
-        <Route component={ErrorPage} />
+          {
+            routesMap(routers, roles)
+          }
       </Switch>
     </Layout>
   )
   return (
     <div className="App">
-      <BrowserRouter>
         <Switch>
           <Route path="/login" component={Login}></Route>
           <Route path="/" render={(props) => {
             return LayoutRouter
           }}></Route>
         </Switch>
-        
-      </BrowserRouter>
     </div>
   );
 }

@@ -10,9 +10,6 @@ let _commonUtil = new CommonUtil();
 
 const LoginForm = (props) => {
   let [redirect] = useState(_commonUtil.getUrlParam('redirect') || '/')
-  useEffect(() => {
-    document.title = '登录 - ManagaementSystem'
-  }, [])
 
   const onFinish = (values) => {
     let loginInfo = {

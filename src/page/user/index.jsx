@@ -42,7 +42,6 @@ function UserList() {
 
   const handleGetUserList = (pageNum) => {
     _user.getUserList(pageNum).then(res => {
-      console.log(res, res.navigatePages)
       let resList = res.list
       resList.forEach(item => {
         item.key = item.id

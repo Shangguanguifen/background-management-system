@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { NavLink, withRouter } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
 import {
-  UnorderedListOutlined,
-
-  DesktopOutlined,
-  FormOutlined,
   UserOutlined,
   CaretDownOutlined,
   LoginOutlined
 } from '@ant-design/icons';
+import BreadcrumbItem from 'util/Breadcrumb'
+
 import './index.scss';
+import routes from 'router/index'
 import UserService from 'service/userService';
 import CommonUtil from 'util/common';
 
@@ -22,9 +21,49 @@ let _commonUtil = new CommonUtil();
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
+function showMenu(routes) {
+  return routes.map(item => {
+    return item.children
+      ? <SubMenu key={item.path} title={item.title} icon={item.icon}>{showMenuItem(item.children)}</SubMenu>
+      : showMenuItem(item)
+  })
+}
+
+function showMenuItem(routes) {
+  if(routes instanceof Array) {
+    // children
+    return routes.map(item => {
+      if(item.children) {
+        // 三级以上路由存在
+        return showMenu([item])
+      }
+      const result = item.menu
+      ? (<Menu.Item key={item.path}>
+          <NavLink to={item.path}>{item.title}</NavLink>
+        </Menu.Item>) : null
+      if(item.path === '/product/categoryList/:id?') {
+        return item.menu
+        ? (<Menu.Item key={item.path}>
+            <NavLink to='/product/categoryList'>{item.title}</NavLink>
+          </Menu.Item>) : null
+      }
+      return item.menu
+        ? (<Menu.Item key={item.path}>
+            <NavLink to={item.path}>{item.title}</NavLink>
+          </Menu.Item>) : null
+    })
+  } else {
+    return routes.menu
+      ? (<Menu.Item key={routes.path} icon={routes.icon}>
+          <NavLink to={routes.path}>{routes.title}</NavLink>
+        </Menu.Item>) : null
+  }
+}
+
 function SiderDemo(props) {
   const [collapsed, setCollapsed] = useState(false);
   let username = _commonUtil.getStorage('userInfo').username;
+
   const onCollapse = collapsed => {
     setCollapsed(collapsed);
   };
@@ -45,21 +84,7 @@ function SiderDemo(props) {
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo"> 后台管理 </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" icon={<DesktopOutlined />}>
-              <NavLink to="/">首页</NavLink>
-            </Menu.Item>
-            <SubMenu key="sub1" icon={<UnorderedListOutlined />} title="商品">
-              <Menu.Item key="2">
-                <NavLink to="/product">商品管理</NavLink>
-              </Menu.Item>
-              <Menu.Item key="3">品类管理</Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub2" icon={<FormOutlined />} title="订单">
-              <Menu.Item key="4">订单管理</Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub3" icon={<UserOutlined />} title="用户">
-              <Menu.Item key="5"><NavLink to="/user/userList">用户列表</NavLink></Menu.Item>
-            </SubMenu>
+            { showMenu(routes) }
           </Menu>
         </Sider>
         <Layout className="site-layout">
@@ -70,10 +95,7 @@ function SiderDemo(props) {
            </div>
           </Header>
           <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
+            <BreadcrumbItem urlDetail={props.location} routes={routes}></BreadcrumbItem>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360, background: '#fff'}}>
               {props.children}
             </div>
@@ -84,5 +106,5 @@ function SiderDemo(props) {
     );
 }
 
-export default SiderDemo
+export default withRouter(SiderDemo);
 
