@@ -602,6 +602,11 @@ module.exports = function (webpackEnv) {
       //   }`,
       //   maxRetries: 2,
       // }),
+
+      
+      new webpack.DefinePlugin({
+        BASENAME: JSON.stringify('/background-management-system')
+      }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

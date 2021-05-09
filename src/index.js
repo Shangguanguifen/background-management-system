@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import store from 'store';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/background-management-system">
     <Provider store={store}>
       <App />
     </Provider>
