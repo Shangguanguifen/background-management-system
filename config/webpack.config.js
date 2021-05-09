@@ -77,6 +77,10 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+
+let {RetryChunkLoadPlugin} = require('webpack-retry-chunk-load-plugin')
+
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -590,6 +594,13 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+
+      new RetryChunkLoadPlugin({
+        cacheBust: `function() {
+          return Date.now();
+        }`,
+        maxRetries: 2,
+      }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

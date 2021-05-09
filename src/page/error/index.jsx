@@ -2,14 +2,21 @@
  * @Author: Guifen Shangguan 
  * @Date: 2021-04-12 16:12:04 
  * @Last Modified by: Guifen Shangguan
- * @Last Modified time: 2021-04-14 11:40:34
+ * @Last Modified time: 2021-05-09 18:48:34
  */
 import React, { PureComponent } from 'react';
 import { Result, Button, Typography } from 'antd';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 const { Paragraph } = Typography;
 
+//页面错误类型枚举
+const ERROR_ENUM = {
+  LOAD_FAIL: 'LOAD_FAIL',
+  RELOADING: 'RELOADING'
+}
+ 
 class MyErrorBoundary extends PureComponent {
   constructor(props) {
     super(props);
@@ -22,6 +29,32 @@ class MyErrorBoundary extends PureComponent {
     return { hasError: true, errorText: JSON.stringify(error) };
   }
 
+  componentDidCatch(error, errorInfo) {
+    this.handleError(error, errorInfo);
+  }
+
+  handleError = (error, errorInfo) => {
+    this.setData({hasError: true})
+    this.handleLoadingChunkError(error)
+  }
+  
+  handleLoadingChunkError = (error, errorInfo) => {
+    //页面浏览期间重新发布，会出现浏览器缓存文件名和服务器文件名不一致，导致下载js失败白屏的问题
+    const loadFailed = new RegExp(/Loading chunk (\d)+ failed/g)
+    if (error && error.message && error.message.match(loadFailed)) {
+      this.setData({errorType: ERROR_ENUM.RELOADING})
+      let loadingChunk = sessionStorage.getItem('loadingChunk')
+      loadingChunk = _.isNumber(loadingChunk) ? loadingChunk + 1 : 1
+      if (loadingChunk > 2) {
+        this.setData({errorType: ERROR_ENUM.LOAD_FAIL})
+        //当前流程结束，重置loadingChunk
+        sessionStorage.setItem('loadingChunk', 0)
+      } else {
+        sessionStorage.setItem('loadingChunk', loadingChunk)
+        window.location.reload()
+      }
+    }
+  }
   clearError () {
     this.setState({
       hasError: false,
