@@ -2,9 +2,9 @@
  * @Author: Guifen Shangguan 
  * @Date: 2021-04-12 16:11:51 
  * @Last Modified by: Guifen Shangguan
- * @Last Modified time: 2021-05-07 13:16:26
+ * @Last Modified time: 2021-05-09 21:08:10
  */
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import routers from 'router/index';
 import { useSelector } from "react-redux";
 

@@ -26,7 +26,6 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-// let { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
 
 
 const postcssNormalize = require('postcss-normalize');
@@ -595,14 +594,6 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
-
-      // new RetryChunkLoadPlugin({
-      //   cacheBust: `function() {
-      //     return Date.now();
-      //   }`,
-      //   maxRetries: 2,
-      // }),
-
       
       new webpack.DefinePlugin({
         BASENAME: JSON.stringify('/background-management-system')
