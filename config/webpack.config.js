@@ -78,6 +78,8 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+console.log(paths.publicUrlOrPath, '456789');
+
 
 
 
