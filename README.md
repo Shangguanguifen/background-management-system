@@ -23,6 +23,9 @@
 3.  提交代码
 4.  新建 Pull Request
 
-![QQ图片20210511180147](https://user-images.githubusercontent.com/45807229/117965237-1b819000-b355-11eb-94fe-736608e953c7.jpg)
+
+Uploading QQ录屏20210512194414.mp4…
+
+
 
 
