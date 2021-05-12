@@ -1,3 +1,4 @@
+
 # background management-system
 
 #### 介绍
@@ -24,7 +25,8 @@
 4.  新建 Pull Request
 
 
-Uploading QQ录屏20210512194414.mp4…
+
+
 
 
 
